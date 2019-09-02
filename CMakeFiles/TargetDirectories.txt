@@ -1,0 +1,3 @@
+/home/mario/Documents/Progra 3/Progra3_Game_Template/CMakeFiles/rebuild_cache.dir
+/home/mario/Documents/Progra 3/Progra3_Game_Template/CMakeFiles/MyGame.dir
+/home/mario/Documents/Progra 3/Progra3_Game_Template/CMakeFiles/edit_cache.dir

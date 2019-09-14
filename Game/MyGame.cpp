@@ -1,6 +1,8 @@
 #include "MyGame.h"
-
-void MyGame::Menu()
+#include <iostream>
+using namespace std;
+int x, y{0};
+void MyGame::Menu(int num)
 {
     con.setForecolor(CColor::White);
     con.setCursor(10, 35);
@@ -10,16 +12,36 @@ void MyGame::Menu()
     con.setCursor(12, 20);
     con << "Presione Esc Para Salir";
     con.refresh();
+    if (num == 0)
+    {
+        cout<<"\n\n\n\n\n\n\n\n";
+        seleccion(0, 0);
+        con.clearScreen();
+        printing();
+    }
+    else
+    {
+        int iRand = (rand() % 9) + 1;
+        for (int x = 0; x < 15; x++)
+        {
+            for (size_t i = 0; i < 30; i++)
+            {
+                gemas[x][i] = iRand;
+                iRand = (rand() % 9) + 1;
+            }
+        }
+    }
 }
 void MyGame::printing()
 {
     con.setCursor(0, 0);
     con.setBackcolor(CColor::Black);
     con.setForecolor(CColor::White);
-    for (int x = 0; x < 22; x++)
+    for (int x = 0; x < 15; x++)
     {
         for (int i = 0; i < 30; i++)
         {
+            cout << "[" << gemas[x][i] << "]";
             switch (gemas[x][i])
             {
             case 1:
@@ -52,19 +74,21 @@ void MyGame::printing()
                 break;
             }
         }
+        cout << "\n";
         con << "\n";
+        con.delayMs(100);
     }
     con.setCursor(2, 65);
     con << "Turnos:";
     con.setCursor(3, 65);
     con << Turnos;
-    con << " de 40";
+    con << " de 90";
     con.setCursor(4, 65);
     con << "Puntaje: ";
     con.setCursor(5, 65);
     con << Puntaje;
     con << " de 200";
-    con.setCursor(6, 65);
+    con.setCursor(6, 62);
     con << "CopyRight Progra 3";
     con.refresh();
     con.delayMs(1000);
@@ -87,6 +111,8 @@ void MyGame::Final()
         con << "Perdiste :v";
     }
     con.refresh();
+    con.delayMs(20000);
+    exit(0);
 }
 void MyGame::combo(int row, int col)
 {
@@ -166,6 +192,7 @@ void MyGame::combo(int row, int col)
         Puntaje += 20;
     }
     printing();
+    seleccion(x, y);
 }
 void MyGame::seleccion(int Row, int Col)
 {
@@ -201,24 +228,15 @@ void MyGame::seleccion(int Row, int Col)
 
 void MyGame::run()
 {
-    Menu();
+    Menu(1);
     con.setForecolor(CColor::White);
-    /*int iRand = (rand() % 9) + 1;
-    for (int x = 0; x < 22; x++)
-    {
-        for (size_t i = 0; i < 30; i++)
-        {
-            gemas[x][i] = iRand;
-            iRand = (rand() % 9) + 1;
-        }
-    }*/
-    int x = 0, y = 0;
-    seleccion(y, x);
+    /**/
     while (con.isActive())
     {
         uint32_t key = con.getKey();
         if (key != SDLK_UNKNOWN)
         {
+            Menu(0);
             switch (key)
             {
             case SDLK_ESCAPE:
@@ -228,7 +246,6 @@ void MyGame::run()
                 if (x != 0)
                 {
                     Turnos--;
-                    con.refresh();
                     x -= 2;
                     seleccion(y, x);
                 }
@@ -237,7 +254,6 @@ void MyGame::run()
                 if (x != 58)
                 {
                     Turnos--;
-                    con.refresh();
                     x += 2;
                     seleccion(y, x);
                 }
@@ -251,19 +267,19 @@ void MyGame::run()
                 }
                 break;
             case SDLK_DOWN:
-                if (y != 18)
+                if (y != 15)
                 {
                     Turnos--;
                     y += 1;
                     seleccion(y, x);
                 }
                 break;
-            case SDLK_KP_ENTER:
-                con.refresh();
+            case SDLK_RETURN:
                 combo(y, x);
                 break;
             default:
-                con << "No Soportado";
+                seleccion(y, x);
+                break;
             }
             con.refresh();
         }

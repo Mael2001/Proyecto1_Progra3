@@ -9,15 +9,15 @@ public:
 
     void run() override;
 
-    int gemas [22][30];
+    int gemas [15][30];
     int Puntaje = 0;
-    int Turnos = 40;
+    int Turnos = 90;
     int remplazo1,remplazo2,remplazo3;
 
 private:
     void seleccion(int Row, int Col);
     void Final();
-    void Menu();
+    void Menu(int);
     void combo (int row, int col);
     void printing();
 };

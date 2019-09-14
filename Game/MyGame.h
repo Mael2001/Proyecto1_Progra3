@@ -17,6 +17,7 @@ public:
 private:
     void seleccion(int Row, int Col);
     void Final();
+    void Menu();
     void combo (int row, int col);
     void printing();
 };
